@@ -4,11 +4,24 @@ import { Carousel } from "./Carousel";
 
 import * as THREE from "three"
 import {Noise, Depth, LayerMaterial} from "lamina";
+import { useRef } from "react";
+import { useFrame } from "@react-three/fiber";
+
+const BG_SPEED = 0.3;
 
 const Background = () => {
+  const ref = useRef();
+
+  useFrame((_state, delta) => {
+    ref.current.rotation.x =
+      ref.current.rotation.y =
+      ref.current.rotation.z +=
+        delta * BG_SPEED;
+  });
+
   return (
-    <mesh scale={100}>
-      <sphereGeometry args={[1,64,64]} />
+    <mesh scale={100} ref={ref}>
+      <sphereGeometry args={[1, 64, 64]} />
       <LayerMaterial side={THREE.BackSide}>
         <Depth
           colorA="#f21a62"
@@ -30,8 +43,9 @@ const Background = () => {
         />
       </LayerMaterial>
     </mesh>
-  )
-}
+  );
+};
+
 
 export const Experience = () => {
   return (
