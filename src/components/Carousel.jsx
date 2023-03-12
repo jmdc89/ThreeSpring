@@ -14,7 +14,7 @@ import { FerrisWheel } from "./Park/FerrisWheel";
 import { Podium } from "./Park/Podium";
 import { ShipLight } from "./Park/ShipLight";
 
-const STEP_DURATION = 2000;
+const STEP_DURATION = 5000;
 
 export const Carousel = (props) => {
 
