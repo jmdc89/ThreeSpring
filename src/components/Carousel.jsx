@@ -1,3 +1,4 @@
+import { animated, useSpring } from "@react-spring/three";
 import { IceCream } from "./Beach/IceCream";
 import { Palm } from "./Beach/Palm";
 import { VolleyBall } from "./Beach/VolleyBall";
@@ -13,11 +14,45 @@ import { FerrisWheel } from "./Park/FerrisWheel";
 import { Podium } from "./Park/Podium";
 import { ShipLight } from "./Park/ShipLight";
 
+const STEP_DURATION = 2000;
+
 export const Carousel = (props) => {
+
+  const { carouselRotation } = useSpring({
+    from: {
+      carouselRotation: 0,
+    },
+    to: [
+      {
+        carouselRotation: -Math.PI / 2,
+        delay: STEP_DURATION,
+      },
+      {
+        carouselRotation: -Math.PI,
+        delay: STEP_DURATION,
+      },
+      {
+        carouselRotation: -1.5 * Math.PI,
+        delay: STEP_DURATION,
+      },
+      {
+        carouselRotation: -2 * Math.PI,
+        delay: STEP_DURATION,
+      },
+    ],
+    config: {
+      mass: 5,
+      tension: 400,
+      friction: 50,
+    },
+    loop: true,
+    immediate: true,
+  });
+
   return (
     <>
       <group rotation-y={-Math.PI / 4} position-y={-0.01}>
-        <group>
+        <animated.group rotation-y={carouselRotation}>
           <mesh position={[0, -2, 0]}>
             <meshStandardMaterial color={"white"} />
             <cylinderBufferGeometry args={[12, 12, 4, 64]} />
@@ -94,7 +129,7 @@ export const Carousel = (props) => {
             <IceCream position={[-8, 4, 8]} scale={[3, 3, 3]} />
             <IceCream position={[-3, 4, 10]} scale={[3, 3, 3]} />
           </>
-        </group>
+        </animated.group>
       </group>
     </>
   );
